@@ -1,4 +1,4 @@
-const getController = require('../controllers/getController')
+const getService = require('./getService')
 const commentService = require('./commentService')
 const fetchService = require('./fetchService')
 
@@ -11,7 +11,7 @@ const github = {
     const date = new Date(since)
 
     try {
-      const json = await getController.readLocalFile(route)
+      const json = await getService.fetchComments(route)
 
       // If we have a response from github
       if (json.statusText === 'OK') {
@@ -59,7 +59,7 @@ const github = {
     let remainingLogins = []
 
     try {
-      const json = await getController.readLocalFile(route)
+      const json = await getService.fetchComments(route)
       // If we have a response from github
       if (json.statusText === 'OK') {
         const headers = json.headers
@@ -100,7 +100,7 @@ const github = {
     const totals = []
 
     try {
-      const json = await getController.readLocalFile(route)
+      const json = await getService.fetchComments(route)
 
       // If we have a response
       if (json.statusText === 'OK') {

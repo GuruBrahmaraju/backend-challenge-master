@@ -1,23 +1,21 @@
 /* eslint-disable radix */
-const getController = require('../controllers/getController')
+const getService = require('./getService')
 
 const pathService = {
+  //
   async setPath(next, last, date) {
     let routes = []
     let logins = []
-    const begin = /.*(\?page=)/
-    const end = /(&per_page=).*/
-    const pattern = /.*(\?page=)|(&per_page=).*/
-    const regex = new RegExp(pattern, 'g')
-    const nextInt = parseInt(next.replace(regex, ''), 0)
-    const lastInt = parseInt(last.replace(regex, ''), 0)
-    const diff = lastInt - nextInt
+    const regex = new RegExp(/.*(\?page=)|(&per_page=).*/, 'g')
+    const nextValue = parseInt(next.replace(regex, ''), 0)
+    const lastValue = parseInt(last.replace(regex, ''), 0)
+    const diff = lastValue - nextValue
 
     // Create placeholder route to inject
     // remaining routes in between "next" & "last"
     let url = ''
-    let urlBegin = next.replace(end, '')
-    let urlEnd = next.replace(begin, '')
+    let urlBegin = next.replace(/(&per_page=).*/, '')
+    let urlEnd = next.replace(/.*(\?page=)/, '')
     let start = urlBegin.slice(0, urlBegin.length - 1)
     let finish = urlEnd.slice(1)
 
@@ -27,7 +25,7 @@ const pathService = {
 
       // Inject remaining routes between "next" & "last"
       if (diff > 1) {
-        for (let i = nextInt + 1; i < lastInt; i++) {
+        for (let i = nextValue + 1; i < lastValue; i++) {
           url = start + i + finish
           await routes.push(url)
         }
@@ -39,7 +37,7 @@ const pathService = {
 
         // Fetch every URL simulataneously
         let jsonArray = await Promise.all(
-          urls.map((url) => getController.readLocalFile(url)),
+          urls.map((url) => getService.fetchComments(url)),
         ).catch((e) => {
           console.error(e)
         })
@@ -58,7 +56,7 @@ const pathService = {
       } else {
         // Fetch every URL simulataneously
         let jsonArray = await Promise.all(
-          routes.sort().map((route) => getController.readLocalFile(route)),
+          routes.sort().map((route) => getService.fetchComments(route)),
         ).catch((e) => {
           console.error(e)
         })

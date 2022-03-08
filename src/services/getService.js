@@ -3,7 +3,8 @@ const config = require('../config')
 const jsonfile = require('jsonfile')
 const process = require('process')
 // Local JSON file we are handling github request in one hour handles 5000 requests
-let file = __dirname.replace(/(\/controllers)/g, '')
+// this file can be stored to DB
+let file = __dirname.replace(/(\/services)/g, '')
 file += '/remaining.json'
 
 // create HTTPS request
@@ -14,10 +15,11 @@ const http = axios.create({
   },
 })
 
-const getController = {
-  async readLocalFile(url) {
+const getService = {
+  async fetchComments(url) {
     try {
-      // Quit application if we have no more calls it reads from the JSON file
+      //  Quit the application if we have no more calls When we reaced limit api calls from git
+      //  it reads from the JSON file
       jsonfile.readFile(file, (err, obj) => {
         if (obj.remaining === '0') {
           let currentHour = Date.now()
@@ -35,7 +37,7 @@ const getController = {
         }
       })
 
-      // Send URL request
+      // Send URL request fetch the data from URL
       let request = await http.get(url)
 
       // Format response
@@ -64,4 +66,4 @@ const getController = {
     }
   },
 }
-module.exports = getController
+module.exports = getService
