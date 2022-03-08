@@ -17,6 +17,10 @@ node index.js --repo anton/test-project --period 20d
 1345 comments, graymur (2104 commits)
    8 comments, Restuta (234 commits)  
 ```
+## we are storing the api limit data JSON file
+Gitub Wit the Rate Limit, you can check the current rate limit status of various REST APIs.
+perhour if fetc only 5000 request. we are handling those details in JSON file.
+
 
 Please use the exact output format, notice that numbers are aligned _(this is what [famous](http://blog.npmjs.org/post/141577284765/kik-left-pad-and-npm) left-pad is for)_. Also it's up to you how to indicate progress of the fetching process, but there must be some indicator.
 
