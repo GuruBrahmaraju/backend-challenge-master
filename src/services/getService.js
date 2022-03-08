@@ -16,6 +16,7 @@ const http = axios.create({
 })
 
 const getService = {
+  // fetch comments from URL
   async fetchComments(url) {
     try {
       //  Quit the application if we have no more calls When we reaced limit api calls from git

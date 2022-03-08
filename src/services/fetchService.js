@@ -8,26 +8,26 @@ const fetchService = {
     let last = ''
     let hasCallback = false
     const link = headers['link']
-    const nextBegin = '<'
+    const nextValue = '<'
     const nextEnd = '>; rel="next", <'
-    const lastBegin = 'next", <'
+    const lastValue = 'next", <'
     const lastEnd = '>; rel="last"'
 
     try {
       // Check if more pages exist
       if (link !== undefined) {
         nextURL = await link.substring(
-          link.indexOf(nextBegin),
+          link.indexOf(nextValue),
           link.indexOf(nextEnd),
         )
         lastURL = await link.substring(
-          link.indexOf(lastBegin),
+          link.indexOf(lastValue),
           link.indexOf(lastEnd),
         )
 
         // Create new strings of "next" & "last" URLs
-        next = await nextURL.replace(nextBegin, '')
-        last = await lastURL.replace(lastBegin, '')
+        next = await nextURL.replace(nextValue, '')
+        last = await lastURL.replace(lastValue, '')
       }
 
       if (last.length > 0 && next.length > 0) {

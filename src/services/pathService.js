@@ -2,7 +2,7 @@
 const getService = require('./getService')
 
 const pathService = {
-  //
+  // set next and last pages
   async setPath(next, last, date) {
     let routes = []
     let logins = []
@@ -21,13 +21,13 @@ const pathService = {
 
     try {
       // First add routes we know we need
-      await routes.push(next, last)
+      routes.push(next, last)
 
       // Inject remaining routes between "next" & "last"
       if (diff > 1) {
         for (let i = nextValue + 1; i < lastValue; i++) {
           url = start + i + finish
-          await routes.push(url)
+          routes.push(url)
         }
       }
 
