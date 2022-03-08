@@ -1,19 +1,19 @@
-/* eslint-disable prettier/prettier */
-const comments = require('./commentsController')
+const commnetsController = require('./commentsController')
 
-module.exports = async function (repo, isoString) {
-  // Fetch Comments
-  const users = await comments(repo, isoString)
-  // Print Benchmarks & Report
-  // Log empty lines for readability
-  console.log('')
-  console.log('')
+const indexController = {
+  async fetchUsers(repo, isoString) {
+    // Fetch Comments
+    const users = await commnetsController.getCommnets(repo, isoString)
 
-  users.map((user) => {
-    let comments = user.comments.toString()
-    let login = user.login
-    let commits = user.total
+    // format the usersdata to in a print at CLI
+    users.map((user) => {
+      let comments = user.comments.toString()
+      let login = user.login
+      let commits = user.total
 
-    console.log(`${comments}  comments, ${login}  (${commits} commits)`)
-  })
+      console.log(`${comments}  comments, ${login}  (${commits} commits)`)
+    })
+  },
 }
+
+module.exports = indexController
