@@ -5,7 +5,7 @@ const commentService = {
 
     try {
       // Create unique array of logins & data template
-      await logins.map((login) => {
+      logins.map((login) => {
         if (!uniqueLogins.includes(login)) {
           uniqueLogins.push(login)
 
@@ -19,7 +19,7 @@ const commentService = {
       })
 
       // Map all logins to unique users template
-      await logins.map((login) => {
+      logins.map((login) => {
         uniqueLogins.map((unique) => {
           if (login === unique) {
             let index = comments.findIndex(

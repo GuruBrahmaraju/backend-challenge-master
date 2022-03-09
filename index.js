@@ -3,7 +3,7 @@ const argv = require('yargs').argv
 const indexController = require('./src/controllers/indexController')
 
 try {
-  // Get the repo and time period from CLI arguments
+  // Get the repo and time period from CLI arguments passed
   const repo = argv.repo
   const period = argv.period
 
@@ -28,6 +28,7 @@ try {
     // print the message
     let message = `Fetching comments for ${days} days for "${repo}"...`
     console.log(message)
+
     indexController.fetchUsers(repo, isoString)
   } else {
     console.error('\nInvalid repo, please try again')

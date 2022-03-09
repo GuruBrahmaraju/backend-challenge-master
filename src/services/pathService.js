@@ -37,13 +37,13 @@ const pathService = {
 
         // Fetch every URL simulataneously
         let jsonArray = await Promise.all(
-          urls.map((url) => getService.fetchComments(url)),
+          urls.map((url) => getService.fetchData(url)),
         ).catch((e) => {
           console.error(e)
         })
 
         // Map to logins array
-        await jsonArray.map((json) => {
+        jsonArray.map((json) => {
           json.data.map((data) => {
             let fetchDate = new Date(data.created_at)
 
@@ -56,11 +56,11 @@ const pathService = {
       } else {
         // Fetch every URL simulataneously
         let jsonArray = await Promise.all(
-          routes.sort().map((route) => getService.fetchComments(route)),
+          routes.sort().map((route) => getService.fetchData(route)),
         ).catch((e) => {
           console.error(e)
         })
-        await jsonArray.map((json) => {
+        jsonArray.map((json) => {
           json.data.map((data) => {
             if (data.user['login']) {
               logins.push(data.user['login'])

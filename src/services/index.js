@@ -11,7 +11,7 @@ const github = {
     const date = new Date(since)
 
     try {
-      const json = await getService.fetchComments(route)
+      const json = await getService.fetchData(route)
 
       // If we have a response from github
       if (json.statusText === 'OK') {
@@ -29,7 +29,7 @@ const github = {
         }
 
         // Filter first request by Date/Time
-        await json.data.map((stats) => {
+        json.data.map((stats) => {
           let fetchDate = new Date(stats.created_at)
           if (fetchDate > date) {
             if (stats.user['login']) {
@@ -59,7 +59,7 @@ const github = {
     let remainingLogins = []
 
     try {
-      const json = await getService.fetchComments(route)
+      const json = await getService.fetchData(route)
       // If we have a response from github
       if (json.statusText === 'OK') {
         const headers = json.headers
@@ -76,7 +76,7 @@ const github = {
           logins = [...remainingLogins]
         }
 
-        await json.data.map((stats) => {
+        json.data.map((stats) => {
           if (stats.user['login']) {
             firstLogins.push(stats.user['login'])
           }
@@ -100,12 +100,12 @@ const github = {
     const totals = []
 
     try {
-      const json = await getService.fetchComments(route)
+      const json = await getService.fetchData(route)
 
       // If we have a response
       if (json.statusText === 'OK') {
         // Create JSON schema template
-        await json.data.map((stats) => {
+        json.data.map((stats) => {
           if (stats.author['login']) {
             totals.push({
               login: stats.author['login'],
