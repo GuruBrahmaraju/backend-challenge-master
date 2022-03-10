@@ -16,18 +16,12 @@ const fetchService = {
     try {
       // Check if more pages exist
       if (link !== undefined) {
-        nextURL = await link.substring(
-          link.indexOf(nextValue),
-          link.indexOf(nextEnd),
-        )
-        lastURL = await link.substring(
-          link.indexOf(lastValue),
-          link.indexOf(lastEnd),
-        )
+        nextURL = link.substring(link.indexOf(nextValue), link.indexOf(nextEnd))
+        lastURL = link.substring(link.indexOf(lastValue), link.indexOf(lastEnd))
 
         // Create new strings of "next" & "last" URLs
-        next = await nextURL.replace(nextValue, '')
-        last = await lastURL.replace(lastValue, '')
+        next = nextURL.replace(nextValue, '')
+        last = lastURL.replace(lastValue, '')
       }
 
       if (last.length > 0 && next.length > 0) {
